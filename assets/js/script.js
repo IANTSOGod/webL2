@@ -310,3 +310,35 @@ function displayPage(books, pageNumber, itemsPerPage) {
 
     displayFilteredBooks(displayedBooks);
 }
+
+function addBook(titre, auteurs, isbn, genre, editeur, datePublication, nombrePages, resume, langue, disponibilite, etat, emplacement, base64Image) {
+    // Création de l'objet représentant le livre
+    const book = {
+        titre: titre,
+        auteurs: [auteurs], // Si plusieurs auteurs, assurez-vous de les gérer correctement
+        isbn: isbn,
+        genre: genre,
+        editeur: editeur,
+        datePublication: datePublication,
+        nombrePages: nombrePages,
+        resume: resume,
+        langue: langue,
+        disponibilite: disponibilite,
+        etat: etat,
+        emplacement: emplacement,
+        image: base64Image  // Image encodée en base64
+    };
+
+    // Récupération de la liste actuelle des livres depuis localStorage ou initialisation d'une liste vide
+    let books = JSON.parse(localStorage.getItem('livres')) || [];
+
+    // Ajout du nouveau livre à la liste
+    books.push(book);
+
+    // Sauvegarde de la liste mise à jour dans localStorage
+    localStorage.setItem('livres', JSON.stringify(books));
+
+    // Optionnel : rediriger l'utilisateur vers une autre page ou mettre à jour l'affichage
+    window.location.href = 'affiche.html'; // Exemple de redirection vers une autre page après l'ajout
+}
+
