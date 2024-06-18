@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un Livre</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1 class="project">Biblio</h1>
+        <nav class="header-nav">
+            <a href="index.html">Ajouter livre</a>
+            <a href="affiche.html">Afficher livre</a>
+        </nav>
+    </header>
+
+    <main>
+        <form id="book-form" class="book-form">
+            <label for="title">Titre:</label>
+            <input type="text" id="title" name="title" required><br><br>
+
+            <label for="author">Auteur:</label>
+            <input type="text" id="author" name="author" required><br><br>
+
+            <label for="isbn">ISBN:</label>
+            <input type="text" id="isbn" name="isbn" readonly><br><br>
+
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" name="genre"><br><br>
+
+            <label for="publisher">Éditeur:</label>
+            <input type="text" id="publisher" name="publisher"><br><br>
+
+            <label for="date">Date de Publication:</label>
+            <input type="text" id="date" name="date"><br><br>
+
+            <label for="pages">Nombre de Pages:</label>
+            <input type="text" id="pages" name="pages"><br><br>
+
+            <label for="summary">Résumé:</label><br>
+            <textarea id="summary" name="summary" rows="4" cols="50"></textarea><br><br>
+
+            <label for="language">Langue:</label>
+            <input type="text" id="language" name="language"><br><br>
+
+            <label for="availability">Disponibilité:</label>
+            <input type="text" id="availability" name="availability"><br><br>
+
+            <label for="condition">État:</label>
+            <input type="text" id="condition" name="condition"><br><br>
+
+            <label for="location">Emplacement:</label>
+            <input type="text" id="location" name="location"><br><br>
+
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" required><br><br>
+
+            <button type="submit">Modifier le Livre</button>
+        </form>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isbn = new URLSearchParams(window.location.search).get('isbn');
+            populateForm(isbn);
+            
+            document.getElementById('book-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                // Récupération des valeurs du formulaire
+                const titre = document.getElementById('title').value;
+                const auteurs = document.getElementById('author').value;
+                const isbn = document.getElementById('isbn').value;
+                const genre = document.getElementById('genre').value;
+                const editeur = document.getElementById('publisher').value;
+                const datePublication = document.getElementById('date').value;
+                const nombrePages = document.getElementById('pages').value;
+                const resume = document.getElementById('summary').value;
+                const langue = document.getElementById('language').value;
+                const disponibilite = document.getElementById('availability').value;
+                const etat = document.getElementById('condition').value;
+                const emplacement = document.getElementById('location').value;
+                const imageFile = document.getElementById('image').files[0];
+
+                // Validation rapide (ajoutez ici votre propre validation si nécessaire)
+                if (!titre || !auteurs || !isbn || !imageFile) {
+                    alert("Veuillez remplir tous les champs requis.");
+                    return;
+                }
+                
+                // Modification du livre
+                modifyBook({
+                    titre, auteurs: [auteurs], isbn, genre, editeur, datePublication,
+                    nombrePages, resume, langue, disponibilite, etat, emplacement, imageFile
+                });
+
+                // Redirection vers la page d'affichage après modification
+                window.location.href = 'affiche.html';
+            });
+        });
+
+        function populateForm(isbn) {
+            const books = JSON.parse(localStorage.getItem('livres')) || [];
+            const book = books.find(b => b.isbn === isbn);
+
+            if (book) {
+                document.getElementById('title').value = book.titre || '';
+                document.getElementById('author').value = book.auteurs.join(', ') || '';
+                document.getElementById('isbn').value = book.isbn || '';
+                document.getElementById('genre').value = book.genre || '';
+                document.getElementById('publisher').value = book.editeur || '';
+                document.getElementById('date').value = book.datePublication || '';
+                document.getElementById('pages').value = book.nombrePages || '';
+                document.getElementById('summary').value = book.resume || '';
+                document.getElementById('language').value = book.langue || '';
+                document.getElementById('availability').value = book.disponibilite || '';
+                document.getElementById('condition').value = book.etat || '';
+                document.getElementById('location').value = book.emplacement || '';
+                // Ne pas pré-remplir le champ image car il ne peut pas être lu directement
+            } else {
+                alert('Livre non trouvé.');
+                window.location.href = 'affiche.html';
+            }
+        }
+
+        function modifyBook(updatedBook) {
+    let books = JSON.parse(localStorage.getItem('livres')) || [];
+    const index = books.findIndex(book => book.isbn === updatedBook.isbn);
+    if (index !== -1) {
+        // Création d'une nouvelle instance de FileReader
+        const reader = new FileReader();
+        
+        // Fonction exécutée lorsque la lecture du fichier est terminée
+        reader.onload = function(event) {
+            updatedBook.image = event.target.result; // Stockage de l'image en base64
+            
+            // Mise à jour du livre dans le tableau
+            books[index] = updatedBook;
+            localStorage.setItem('livres', JSON.stringify(books));
+            
+            // Redirection vers la page d'affichage après modification
+            window.location.href = 'affiche.html';
+        };
+        
+        // Lecture du fichier en tant que données URL (base64)
+        reader.readAsDataURL(updatedBook.imageFile);
+    } else {
+        console.error('Livre non trouvé pour modification.');
+    }
+}
+
+    </script>
+</body>
+</html>

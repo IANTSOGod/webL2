@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Livres</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1 class="project">Biblio</h1>
+        <nav class="header-nav">
+            <a href="index.html">Ajouter livre</a>
+            <a href="affiche.html">Afficher livre</a>
+        </nav>
+    </header>
+    
+    <main>
+        <h1 id="log-area">Liste des Livres</h1>
+        
+        <input type="text" id="search" placeholder="Rechercher un livre...">
+        <div id="pagination" class="pagination"></div>
+        <div id="books" class="fade-in"></div>
+        <div id="details" style="display: none;"></div>
+        <button id="back-button" style="display: none;">Retour à la Liste</button>
+    </main>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

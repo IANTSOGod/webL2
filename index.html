@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajout de Livre</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1 class="project">Biblio</h1>
+        <nav class="header-nav">
+            <a href="index.html">Ajouter livre</a>
+            <a href="affiche.html">Afficher livre</a>
+        </nav>
+    </header>
+    
+    
+    <main>
+        <h1>Ajouter un Nouveau Livre</h1>
+        <form id="book-form">
+            <label for="title">Titre:</label>
+            <input type="text" id="title" name="title" required>
+            <label for="author">Auteur:</label>
+            <input type="text" id="author" name="author" required>
+            <label for="isbn">ISBN:</label>
+            <input type="text" id="isbn" name="isbn" required>
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" name="genre">
+            <label for="publisher">Éditeur:</label>
+            <input type="text" id="publisher" name="publisher">
+            <label for="date">Date de Publication:</label>
+            <input type="date" id="date" name="date">
+            <label for="pages">Nombre de Pages:</label>
+            <input type="number" id="pages" name="pages">
+            <label for="summary">Résumé:</label>
+            <textarea id="summary" name="summary"></textarea>
+            <label for="language">Langue:</label>
+            <input type="text" id="language" name="language">
+            <label for="availability">Disponibilité:</label>
+            <input type="text" id="availability" name="availability">
+            <label for="condition">État:</label>
+            <input type="text" id="condition" name="condition">
+            <label for="location">Emplacement:</label>
+            <input type="text" id="location" name="location">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" required>
+            <button type="submit">Ajouter le Livre</button>
+        </form>
+    </main>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
